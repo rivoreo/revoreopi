@@ -1,10 +1,10 @@
 [Unit]
-Description=PPP over SSH client to Rivoreo Beijing
+Description=PPP peer %I
 After=network-online.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/pppd call rivoreo-beijing nodetach
+ExecStart=/usr/bin/pppd call %i nodetach
 StandardOutput=file:/dev/console
 Restart=always
 RestartSec=10s
