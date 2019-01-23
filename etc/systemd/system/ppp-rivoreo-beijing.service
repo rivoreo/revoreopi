@@ -1,0 +1,15 @@
+[Unit]
+Description=PPP over SSH client to Rivoreo Beijing
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/pppd call rivoreo-beijing nodetach
+StandardOutput=file:/dev/console
+Restart=always
+RestartSec=10s
+;StartLimitInterval=200
+;StartLimitBurst=0
+
+[Install]
+WantedBy=multi-user.target
