@@ -1,5 +1,5 @@
 [Unit]
-Description=PPP peer %I
+Description=PPP peer %i
 After=network-online.target
 
 [Service]
