@@ -1,0 +1,23 @@
+[Unit]
+Description=Auto ssh Pi 
+Documentation=https://johnny.moe
+After=network-online.target
+
+
+[Service]
+Type=simple
+# the default is not to use systemd for cgroups because the delegate issues still
+# exists and systemd currently does not support the cgroup feature set required
+# for containers run by docker
+ExecStart=/usr/bin/autossh -M 45600 -N -o "PubkeyAuthentication=yes" -o "StrictHostKeyChecking=false" -o "ServerAliveInterval 60" -o "ServerAliveCountMax 3" -R tokyo.johnny.moe:20022:127.0.0.1:22 bmy001@tokyo.johnny.moe
+ExecReload=/bin/kill -s HUP $MAINPID
+# kill only the docker process, not all processes in the cgroup
+KillMode=process
+# restart the docker process if it exits prematurely
+Restart=always
+RestartSec=30s
+StartLimitInterval=200
+StartLimitBurst=0
+
+[Install]
+WantedBy=multi-user.target
